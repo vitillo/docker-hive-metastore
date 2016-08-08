@@ -1,0 +1,27 @@
+postgresql:
+    image: postgres:9.5
+    ports:
+        - "5432:5432"
+    environment:
+        - POSTGRES_USER=hive
+        - POSTGRESS_PASSWORD=password
+        - POSTGRES_DB=metastore
+
+hdfs-namenode:
+    image: uhopper/hadoop-namenode:2.7.2
+    ports:
+      - "8020:8020"
+      - "50070:50070"
+    environment:
+      - CLUSTER_NAME=hadoop
+
+metastore:
+    build: ..
+    links:
+      - postgresql
+      - hdfs-namenode
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://hdfs-namenode:8020
+      - DB_URI=postgresql
+      - DB_USER=hive
+      - DB_PASSWORD=password
