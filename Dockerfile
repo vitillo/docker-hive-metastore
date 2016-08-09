@@ -18,6 +18,7 @@ RUN wget http://apache.mirror.anlx.net/hive/hive-${HIVE_VERSION}/apache-hive-${H
 
 ADD resources/entrypoint_hive.sh entrypoint_hive.sh
 ADD resources/hive-site.xml.template $HIVE_CONF/hive-site.xml.template
+ADD resources/hive-log4j.properties.template $HIVE_CONF/hive-log4j.properties.template
 RUN chmod +x entrypoint_hive.sh
 
 ENTRYPOINT ["./entrypoint_hive.sh"]
